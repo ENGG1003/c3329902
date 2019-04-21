@@ -8,13 +8,21 @@
 #include <stdlib.h>
 
 
-//main function with some ideas for integers 
-int main() {
+void inputCipher(char* text, int key); // Defining the function for taking user input, taking in text and key value
+
+int main(void) { //main function 
     
-    int key = 1;
+    int key = 1; 
+    char text[500]; //Maximum characters set to 500, should be enough
+    
+    printf("Input text: "); //User inputs text
+   
+   fgets(text, sizeof(text), stdin); //Asks user for text, stores in "text" veriable
+
     
     int a = 0;
     int b = 1;
+    //... c=3 etc? maybe 
     
     return 0;
 }
