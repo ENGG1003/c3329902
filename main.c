@@ -17,12 +17,22 @@ int main(void) { //main function
     
     printf("Input text: "); //User inputs text
    
-   fgets(text, sizeof(text), stdin); //Asks user for text, stores in "text" veriable
+    fgets(text, sizeof(text), stdin); //Asks user for text, stores in "text" veriable
+    
+    inputCipher(char* text, int key)
+}
 
+void inputCipher(char* text, int key) {
     
-    int a = 0;
-    int b = 1;
-    //... c=3 etc? maybe 
+    int input = 0;
+    char newValue;
+    char value;
     
+    while(text[input] != '\0' && strlen(text)-1 > input){
+        value = ((int)text[input] -97 + key) % 26 + 97;  //returns the character as a number, ( The -97 is counteract the ASCII values and start from 0)
+        newValue = (char)(value);
+        
+        printf("\n %c", value);
+    }
     return 0;
 }
