@@ -6,17 +6,71 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 #define MAX 100 
+
+ char text[500], ch; //Maximum characters set to 500, should be enough
+    int key; //This key determines how many letters the rotation cipher will move
+    int d=0; //For switch statement
+    int increment; //Used in for loop as counter
+    char alternatealpha[26] = {'Z','Y','X','W','V','U','T','S','R','Q','P','O','N','M','L','K','J','I','H','G','F','E','D','C','B','A'}; 
+    //In this case im using a backwards alphabet
+
+
+
+
+
+int index(char alternatealpha[],char findchar){
+  for(int increment = 0 ; increment < 26; increment ++){
+    if(alternatealpha[increment] == findchar){
+      return increment;
+    }
+  }
+  return -1;
+}
+
+
+
+char* encrypt(char *text,char alternatealpha[]){
+  int length = strlen(text);
+  char *entext = (char *) malloc(sizeof(char)*length);
+
+  for(int increment = 0; increment < length; increment++){
+    int enindex = toupper(text[increment]) - 'A'; //toupper makes any lowercase input uppercase
+    if(enindex >= 0 && enindex < 26){ //if outside of
+      entext[increment] = alternatealpha[enindex];
+    }else{
+      entext[increment] = text[increment];
+    }
+  }
+  return entext;
+}
+
+
+
+char *decrypt(char *text,char alternatealpha[]){
+  int length = strlen(text);
+  char *detext = (char *) malloc(sizeof(char)*length);
+  for(int increment = 0; increment <length; increment++){
+    int deindex = toupper(text[increment]) - 'A';
+    if(deindex >= 0 && deindex < 26){
+      int codeindex = index(alternatealpha,toupper(text[increment]));
+      detext[increment] = 'A' + codeindex;
+    }else{
+      detext[increment] = text[increment];
+    }
+  }
+  return detext;
+}
+
+
+
+
 
 int main() { //Main function 
     
   
-    char text[500], ch; //Maximum characters set to 500, should be enough
-    int key; //This key determines how many letters the rotation cipher will move
-    int d=0; //For switch statement
-    int increment; //Used in for loop as counter
- 
-    
+   
   	printf("Enter a message to encrypt/decrypt: "); //User inputs text
     fgets(text, MAX, stdin); //Asks user for text, stores in "text" variable
     
@@ -30,7 +84,7 @@ int main() { //Main function
    
    
    switch(d) {
-   case 1:
+   case 1: //Ceaser encrypt
    
     printf("Please enter key: "); 
     scanf("%d", &key); //Standard input, scans for key off user
@@ -61,7 +115,7 @@ int main() { //Main function
 		printf("Encrypted message: %s", text);
             break;
             
-    case 2:
+    case 2: {// Ceaser decrypt
     
     printf("Please enter key: "); 
     scanf("%d", &key); //Standard input, scans for key off user
@@ -91,16 +145,31 @@ int main() { //Main function
 	
 	printf("Decrypted message: %s", text);
 	break;
+    }
+	case 3: {//Substitution encrypt
 	
-	case 3:
+ 
+  char alternatealpha[26] = {'Z','Y','X','W','V','U','T','S','R','Q','P','O','N','M','L','K','J','I','H','G','F','E','D','C','B','A'};
+
+  char *finalenmessage = encrypt(text,alternatealpha);
+  printf("Encrypted Message: %s\n",finalenmessage);
+  char *finaldemessage = decrypt(finalenmessage,alternatealpha);
+  
 	
-	printf("well well well");
 	break;
+	}
 	
-	case 4: 
 	
-	printf("hi");
-	break;
+	case 4: {//Substitution decrypt
+	
+char alternatealpha[26] = {'Z','Y','X','W','V','U','T','S','R','Q','P','O','N','M','L','K','J','I','H','G','F','E','D','C','B','A'};
+
+  char *finalenmessage = encrypt(text,alternatealpha);
+  
+  char *finaldemessage = decrypt(finalenmessage,alternatealpha);
+  printf("Decrypted Message: %s\n",finaldemessage);
+
+break;
 	
 	}
 	
@@ -109,6 +178,6 @@ int main() { //Main function
 	
 	return 0;
 }
-    
+}
    
 
