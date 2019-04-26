@@ -9,25 +9,14 @@
 #include <ctype.h>
 #define MAX 100 
 
+
+
  char text[500], ch; //Maximum characters set to 500, should be enough
     int key; //This key determines how many letters the rotation cipher will move
     int d=0; //For switch statement
-    int increment; //Used in for loop as counter
+    int increment = 0; //Used in loop as counter variable
     char alternatealpha[26] = {'Z','Y','X','W','V','U','T','S','R','Q','P','O','N','M','L','K','J','I','H','G','F','E','D','C','B','A'}; 
-    //In this case im using a backwards alphabet
-
-
-
-
-
-int index(char alternatealpha[],char findchar){
-  for(int increment = 0 ; increment < 26; increment ++){
-    if(alternatealpha[increment] == findchar){
-      return increment;
-    }
-  }
-  return -1;
-}
+    //This is our alternate alphabet, A goes to Z, B goes to Y etc.
 
 
 
@@ -36,60 +25,42 @@ char* encrypt(char *text,char alternatealpha[]){
   char *entext = (char *) malloc(sizeof(char)*length);
 
   for(int increment = 0; increment < length; increment++){
-    int enindex = toupper(text[increment]) - 'A'; //toupper makes any lowercase input uppercase
-    if(enindex >= 0 && enindex < 26){ //if outside of
+    int enindex = toupper(text[increment]) - 'A'; //toupper is used as assesment requires only uppercase output
+    if(enindex >= 0 && enindex < 26){ //if inside of 26 letter alternate alphabet
       entext[increment] = alternatealpha[enindex];
     }else{
       entext[increment] = text[increment];
     }
   }
-  return entext;
+  return entext; //This function returns the encrypted text
 }
-
-
-
-char *decrypt(char *text,char alternatealpha[]){
-  int length = strlen(text);
-  char *detext = (char *) malloc(sizeof(char)*length);
-  for(int increment = 0; increment <length; increment++){
-    int deindex = toupper(text[increment]) - 'A';
-    if(deindex >= 0 && deindex < 26){
-      int codeindex = index(alternatealpha,toupper(text[increment]));
-      detext[increment] = 'A' + codeindex;
-    }else{
-      detext[increment] = text[increment];
-    }
-  }
-  return detext;
-}
-
-
 
 
 
 int main() { //Main function 
     
-  
-   
   	printf("Enter a message to encrypt/decrypt: "); //User inputs text
     fgets(text, MAX, stdin); //Asks user for text, stores in "text" variable
     
     printf("Please choose from menu:\n"); //Gives user choice of next for loop
     printf("1: Ceaser encrypt\n");
     printf("2: Ceaser decrypt\n");
-    printf("3: Substitution encrypt\n");
-    printf("4: Substitution decrypt\n");
-    
+    printf("3: Run Substitution encrypt/decrypt equation\n");
+    printf("4: Run brute force Ceaser decrypt equation\n");
+      
     scanf("%d", &d); //This scans for user input, then sends either 1 or 2 to variable d which is used to pick a statement in the (switch statement) flow control
    
    
    switch(d) {
+       
+       
+       
    case 1: //Ceaser encrypt
    
     printf("Please enter key: "); 
     scanf("%d", &key); //Standard input, scans for key off user
     
-       for(increment = 0; text[increment] != '\0'; ++increment){
+       for(increment = 0; text[increment] != '\0'; ++increment){ 
 		ch = text[increment];
 		
 		if(ch >= 'a' && ch <= 'z'){
@@ -114,6 +85,8 @@ int main() { //Main function
 	}
 		printf("Encrypted message: %s", text);
             break;
+            
+            
             
     case 2: {// Ceaser decrypt
     
@@ -146,37 +119,57 @@ int main() { //Main function
 	printf("Decrypted message: %s", text);
 	break;
     }
-	case 3: {//Substitution encrypt
-	
- 
-  char alternatealpha[26] = {'Z','Y','X','W','V','U','T','S','R','Q','P','O','N','M','L','K','J','I','H','G','F','E','D','C','B','A'};
+    
+    
+    
+	case 3: {//Substitution encrypt/decrypt
 
   char *finalenmessage = encrypt(text,alternatealpha);
-  printf("Encrypted Message: %s\n",finalenmessage);
-  char *finaldemessage = decrypt(finalenmessage,alternatealpha);
+  printf("Encrypted/decrypted message: %s\n",finalenmessage);
+
   
-	
 	break;
 	}
 	
 	
-	case 4: {//Substitution decrypt
 	
-char alternatealpha[26] = {'Z','Y','X','W','V','U','T','S','R','Q','P','O','N','M','L','K','J','I','H','G','F','E','D','C','B','A'};
-
-  char *finalenmessage = encrypt(text,alternatealpha);
-  
-  char *finaldemessage = decrypt(finalenmessage,alternatealpha);
-  printf("Decrypted Message: %s\n",finaldemessage);
-
-break;
+		case 4: {//Brute force Ceaser
+	key=0;
+	printf("Possible messages for the input: ");
+    while(key <= 25){
+        
+      for(increment = 0; text[increment] != '\0'; increment++){ 
+		ch = text[increment];
+		
+		if(ch >= 'a' && ch <= 'z'){
+			ch = ch + key;
+			
+			if(ch > 'z'){
+				ch = ch - 'z' + 'a' - 1;
+			}
+			
+			text[increment] = ch;
+		}
+		else if(ch >= 'A' && ch <= 'Z'){
+			ch = ch + key;
+			
+			if(ch > 'Z'){
+				ch = ch - 'Z' + 'A' - 1;
+			}
+			
+			text[increment] = ch;
+		}
+		
+		printf("%s", text);
+		
+        
+	} key++;
+		}
+		
+	break;
 	
-	}
-	
-	
-
-	
-	return 0;
+}
+return 0;
 }
 }
    
