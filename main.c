@@ -1,5 +1,5 @@
 /*
- * Assignment 1: Ceaser Cipher 
+ * Assignment 1: Ceaser/Substitution Cipher 
  * by Trystan Auddino c3329902
  */
 
@@ -11,7 +11,7 @@
 
 
 
- char text[500], ch; //Maximum characters set to 500, should be enough
+char text[500], ch; //Maximum characters set to 500, should be enough
     int key; //This key determines how many letters the rotation cipher will move
     int d=0; //For switch statement
     int increment = 0; //Used in loop as counter variable
@@ -55,122 +55,122 @@ int main() { //Main function
        
        
        
-   case 1: //Ceaser encrypt
+        case 1: {//Ceaser encrypt
    
-    printf("Please enter key: "); 
-    scanf("%d", &key); //Standard input, scans for key off user
+            printf("Please enter key: "); 
+            scanf("%d", &key); //Standard input, scans for key off user
     
-       for(increment = 0; text[increment] != '\0'; ++increment){ 
-		ch = text[increment];
+            for(increment = 0; text[increment] != '\0'; ++increment){ 
+		        ch = text[increment];
 		
-		if(ch >= 'a' && ch <= 'z'){
-			ch = ch + key;
+		        if(ch >= 'a' && ch <= 'z'){
+			        ch = ch + key;
 			
-			if(ch > 'z'){
-				ch = ch - 'z' + 'a' - 1;
-			}
+			        if(ch > 'z'){
+				        ch = ch - 'z' + 'a' - 1;
+			        }
 			
-			text[increment] = ch;
-		}
-		else if(ch >= 'A' && ch <= 'Z'){
-			ch = ch + key;
+			        text[increment] = ch;
+		        }
+		        else if(ch >= 'A' && ch <= 'Z'){
+			        ch = ch + key;
 			
-			if(ch > 'Z'){
-				ch = ch - 'Z' + 'A' - 1;
-			}
+			        if(ch > 'Z'){
+				        ch = ch - 'Z' + 'A' - 1;
+			        }
 			
-			text[increment] = ch;
-		}
+			        text[increment] = ch;
+		        }
 		
-	}
+	        }
 		printf("Encrypted message: %s", text);
             break;
+        }
             
             
-            
-    case 2: {// Ceaser decrypt
+        case 2: {// Ceaser decrypt
     
-    printf("Please enter key: "); 
-    scanf("%d", &key); //Standard input, scans for key off user
+            printf("Please enter key: "); 
+            scanf("%d", &key); //Standard input, scans for key off user
 	    
-	for(increment = 0; text[increment] != '\0'; ++increment){
-		ch = text[increment];
+	        for(increment = 0; text[increment] != '\0'; ++increment){
+		        ch = text[increment];
 		
-		if(ch >= 'a' && ch <= 'z'){
-			ch = ch - key;
+		        if(ch >= 'a' && ch <= 'z'){
+			        ch = ch - key;
 			
-			if(ch < 'a'){
-				ch = ch + 'z' - 'a' + 1;
-			}
+			        if(ch < 'a'){
+				        ch = ch + 'z' - 'a' + 1;
+			        }
 			
-			text[increment] = ch;
-		}
-		else if(ch >= 'A' && ch <= 'Z'){
-			ch = ch - key;
+			        text[increment] = ch;
+		        }
+		        else if(ch >= 'A' && ch <= 'Z'){
+			        ch = ch - key;
 			
-			if(ch < 'A'){
-				ch = ch + 'Z' - 'A' + 1;
-			}
+			        if(ch < 'A'){
+			        	ch = ch + 'Z' - 'A' + 1;
+			        }
 			
-			text[increment] = ch;
-		}
-	}
+			        text[increment] = ch;
+		        }
+	        }
 	
-	printf("Decrypted message: %s", text);
-	break;
-    }
+	    printf("Decrypted message: %s", text);
+	        break;
+        }
     
     
     
-	case 3: {//Substitution encrypt/decrypt
+        case 3: {//Substitution encrypt/decrypt
 
-  char *finalenmessage = encrypt(text,alternatealpha);
-  printf("Encrypted/decrypted message: %s\n",finalenmessage);
+            char *finalenmessage = encrypt(text,alternatealpha);
+            printf("Encrypted/decrypted message: %s\n",finalenmessage);
 
   
-	break;
-	}
+	        break;
+	       }
 	
 	
 	
-		case 4: {//Brute force Ceaser
-	key=0;
-	printf("Possible messages for the input: ");
-    while(key <= 25){
+        case 4: {//Brute force Ceaser
+	        key=0;
+	        printf("Possible messages for the input: ");
+            while(key <= 25){
         
-      for(increment = 0; text[increment] != '\0'; ++increment){
-		ch = text[increment];
+            for(increment = 0; text[increment] != '\0'; ++increment){
+		        ch = text[increment];
 		
-		if(ch >= 'a' && ch <= 'z'){
-			ch = ch - key;
+		        if(ch >= 'a' && ch <= 'z'){
+			        ch = ch - key;
 			
-			if(ch < 'a'){
-				ch = ch + 'z' - 'a' + 1;
-			}
+			        if(ch < 'a'){
+				        ch = ch + 'z' - 'a' + 1;
+			        }
 			
-			text[increment] = ch;
-		}
-		else if(ch >= 'A' && ch <= 'Z'){
-			ch = ch - key;
+			        text[increment] = ch;
+		        }
+		        else if(ch >= 'A' && ch <= 'Z'){
+			        ch = ch - key;
 			
-			if(ch < 'A'){
-				ch = ch + 'Z' - 'A' + 1;
-			}
+			        if(ch < 'A'){
+				        ch = ch + 'Z' - 'A' + 1;
+			        }
 			
-			text[increment] = ch;
-		}
+			        text[increment] = ch;
+		        }
 		
-		printf("%s", text);
+		        printf("%s", text);
 		
         
-	} key++;
-		}
+	        } key++;
+		        }
 		
-	break;
+	        break;
 	
-}
-return 0;
-}
+        }
+    return 0;
+    }
 }
    
 
