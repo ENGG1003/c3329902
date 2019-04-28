@@ -138,23 +138,23 @@ int main() { //Main function
 	printf("Possible messages for the input: ");
     while(key <= 25){
         
-      for(increment = 0; text[increment] != '\0'; increment++){ 
+      for(increment = 0; text[increment] != '\0'; ++increment){
 		ch = text[increment];
 		
 		if(ch >= 'a' && ch <= 'z'){
-			ch = ch + key;
+			ch = ch - key;
 			
-			if(ch > 'z'){
-				ch = ch - 'z' + 'a' - 1;
+			if(ch < 'a'){
+				ch = ch + 'z' - 'a' + 1;
 			}
 			
 			text[increment] = ch;
 		}
 		else if(ch >= 'A' && ch <= 'Z'){
-			ch = ch + key;
+			ch = ch - key;
 			
-			if(ch > 'Z'){
-				ch = ch - 'Z' + 'A' - 1;
+			if(ch < 'A'){
+				ch = ch + 'Z' - 'A' + 1;
 			}
 			
 			text[increment] = ch;
