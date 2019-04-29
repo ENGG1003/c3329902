@@ -1,5 +1,5 @@
 /*
- * Assignment 1: Ceaser/Substitution Cipher 
+ * Assignment 1: Ceaser/Substitution Cipher/Decrypt
  * by Trystan Auddino c3329902
  */
 
